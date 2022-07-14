@@ -1,0 +1,10 @@
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+[1mindexing[0m [34marrivals.csv[0m [================================================] [32m1.06TB/s[0m, eta: [36m 0s[0m                                                                                                                              Called from: stop_incompatible_classes(e1, e2, .Generic)
+No traceback available 
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+Called from: stop_incompatible_classes(e1, e2, .Generic)
+..................................................................................Called from: nrow(arrivals_df)
+...................................................................................Called from: nrow(arrivals_df)

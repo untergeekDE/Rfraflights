@@ -1,0 +1,79 @@
+
+ 2022-07-12 17:21:53 
+..................................................................................
+Arrivals:  4055  flights read
+
+ 2022-07-12 18:30:33 
+
+ 2022-07-12 18:31:23 
+..................................................................................
+Arrivals:  4092  flights read
+...............................................................................
+Departures:  3922  flights read
+
+> ts <- now()
+
+> # Read 48 hours into the past, and 96 hours into the future
+> cat("\n",as.character(ts),"\n")
+
+ 2022-07-12 18:36:38 
+
+> # Define column types
+> 
+> a_types <- cols(.default = "c",
++                 timestamp = "T",
++                 # Don't read sched etc. as datetime  .... [TRUNCATED] 
+
+> d_types <- cols(timestamp = "T",
++                 # sched = "T",
++                 # schedArr = "T",
++                 # esti = "T",
++              .... [TRUNCATED] 
+
+> #---- fn definitions ----
+> diff_df <- function(old_df,new_df) {
++   # Matches ID and lu
++   return(new_df %>%
++            anti_join(new_df, by=c(" ..." ... [TRUNCATED] 
+
+> # Convert POSIX dates to ISO8601 strings with timezone
+> iso8601ify <- function(df) {
++   return (df %>%
++             mutate_at(c("lu","sched"),~fo .... [TRUNCATED] 
+
+> #---- Do the work ----
+> 
+> arrivals_df <- get_fra("arrivals",
++                        from = ts-hours(48),
++                        to = ts+hours( .... [TRUNCATED] 
+..................................................................................
+> cat("\nArrivals: ",nrow(arrivals_df)," flights read\n")
+
+Arrivals:  4095  flights read
+
+> departures_df <- get_fra("departures",
++                          from = ts-hours(48),
++                          to = ts+hours(120)) %>%
++   # Keep .... [TRUNCATED] 
+...............................................................................
+> cat("\nDepartures: ",nrow(departures_df)," flights read\n")
+
+Departures:  3920  flights read
+
+> # Write departures as CSV (about 600k)
+> # Update arrivals
+> if (!file.exists("../data/arrivals.RDS")) {
++   # No CSV log file yet
++   arrivals_df % .... [TRUNCATED] 
+Arrivals: Updating  4093  existing flights
+[1mwrote[0m [32m9.39kB[0m in [36m 0s[0m, [32m1.88GB/s[0m[1mwrote[0m [32m1.00TB[0m in [36m 0s[0m, [32m120.93TB/s[0m                                                                                          
+> if (!file.exists("../data/departures.RDS")) {
++   # No CSV log file yet
++   departures_df %>%
++   saveRDS("../data/departures.RDS")
++ } else {
++   e .... [TRUNCATED] 
+Departures: Updating  3925  existing flights
+[1mwrote[0m [32m6.82kB[0m in [36m 0s[0m, [32m1.36GB/s[0m[1mwrote[0m [32m1.00TB[0m in [36m 0s[0m, [32m108.45TB/s[0m                                                                                          
+> # Stop logging
+> sink()
