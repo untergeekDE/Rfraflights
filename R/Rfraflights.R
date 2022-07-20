@@ -43,7 +43,7 @@
 #' - **typ** - Only ever seems to be	“P”.
 #' - **al**	- Abbreviated airline code	Two-character code	e.g. “LH”
 #' - **alname**	- Airline name string,	e.g. “Lufthansa”
-#' - **fnr** - Flight number	string containing airline code and flight number, e.g. “LH 1482”
+#' - **fnr** - Flight number	string containing airline code and flight number, e.g. “LH 1482”. NB: Trains af a "flight number" of the form "LH 3xxx".
 #' - **reg** - Aircraft registration code/call sign?
 #' - **terminal** - FRA Terminal:	"1" or "2" (Terminal 3 is just being built)
 #' - **halle** Hall code:	"A","B","C",“D”,"E", "AB", "NA"

@@ -60,7 +60,7 @@ get_fra_departures_df <- function(h_back = 48, h_forward =120) {
 
 #---- Function ----
 
-#' Tupdate_fra_df
+#' update_fra_df
 #'
 #' @description Reads arrivals/departures and appends to existing data, removing duplicates
 #'
