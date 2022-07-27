@@ -20,11 +20,15 @@ cat("Updating arrivals...\n")
 update_fra_log(path="./fra_log/",flighttype = "a")
 cat("Updating departures... \n")
 update_fra_log(path="./fra_log/",flighttype = "d")
-cat("Done. \n")
 
 #
 if (directory.exists("/home/jan_eggers_hr_de/")) {
   # Google-Bucket befüllen
-  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../data/arrivals.csv gs://d.data.gcp.cloud.hr.de/arrivals.csv')
-  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../data/departures.csv gs://d.data.gcp.cloud.hr.de/departures.csv')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_arrivals.csv gs://d.data.gcp.cloud.hr.de/arrivals.csv')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_departures.csv gs://d.data.gcp.cloud.hr.de/departures.csv')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_arrivals.RDS gs://d.data.gcp.cloud.hr.de/fra_arrivals.RDS')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_departures.RDS gs://d.data.gcp.cloud.hr.de/fra_departures.RDS')
+
 }
+
+cat("Done. \n")
