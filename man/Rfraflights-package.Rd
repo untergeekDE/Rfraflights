@@ -56,7 +56,7 @@ The library returns a data frame containing these values
 \item \strong{typ} - Only ever seems to be	“P”.
 \item \strong{al}	- Abbreviated airline code	Two-character code	e.g. “LH”
 \item \strong{alname}	- Airline name string,	e.g. “Lufthansa”
-\item \strong{fnr} - Flight number	string containing airline code and flight number, e.g. “LH 1482”
+\item \strong{fnr} - Flight number	string containing airline code and flight number, e.g. “LH 1482”. NB: Trains af a "flight number" of the form "LH 3xxx".
 \item \strong{reg} - Aircraft registration code/call sign?
 \item \strong{terminal} - FRA Terminal:	"1" or "2" (Terminal 3 is just being built)
 \item \strong{halle} Hall code:	"A","B","C",“D”,"E", "AB", "NA"

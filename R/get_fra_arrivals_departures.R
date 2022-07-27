@@ -58,7 +58,41 @@ get_fra_departures_df <- function(h_back = 48, h_forward =120) {
   return(d_df)
 }
 
-#---- Function ----
+#---- Functions for logging ----
+
+
+#' distinct_fra_df
+#'
+#' @description Remove duplicate lines from flight data frame
+#'
+#' @details
+#' Data on the web site is updated every couple of minutes; getting new time stamps:
+#' a lu stamp for the last change of data in the FRA database, and a timestamp from
+#' the Rfraflights query. Ignore these time stamps and remove all duplicate data,
+#' keeping only the first occurrence of modified data.
+#'
+#' Aussumes that id is an unique identifier for ONE flight on a certain day.
+#'
+#' Basically just a helper function but exported for use in data sanitation.
+#'
+#' @param df Data frame containing either arrival or departure data
+#'
+#' @return updated data frame with the newly read data; duplicates removed; sorted by id
+#' @export
+distinct_fra_df <- function(fra_df) {
+  return(
+    fra_df %>%
+      # Sort by unique flight ID.
+      group_by(id) %>%
+      # Arrange in ascending order - as distinct() keeps the first occurrence,
+      # this means, keep earliest proof of data change
+      arrange(lu) %>%
+      # Compare everything except the timpestamp. Keep all variables.
+      distinct(across(c(-lu,-timestamp)),.keep_all = T) %>%
+      # Ungroup for consistency
+      ungroup()
+  )
+}
 
 #' update_fra_df
 #'
@@ -84,9 +118,10 @@ update_fra_df <- function(df,h_back = 48, h_forward =120) {
     # Call either get_arrivals_df or get_departures_df
     # with standard parameters.
     bind_rows(df_new) %>%
-    group_by(id) %>%
     # Filter all duplicates (i.e. identical ID and Last Update)
-    distinct(id,lu,.keep_all = T) %>%
+    distinct_fra_df(.) %>%
+    # Convert NA status to "" for ease of use
+    mutate(status = ifelse(is.na(status),"",status)) %>%
     arrange(sched)
   return(updated_df)
 }
@@ -132,16 +167,16 @@ update_fra_log <- function(path="./fra_log/",flighttype="arrivals") {
       get_fra_departures_df() %>%
         saveRDS(fname_rds)
     } else {
-      arrivals_old_df <- readRDS(fname_rds)
-      cat("Arrivals: Updating ",nrow(arrivals_old_df)," existing flights\n")
-      arrivals_all_df <- update_fra_df(arrivals_old_df)
-      cat("Arrivals: now ",nrow(arrivals_all_df)-nrow(arrivals_old_df)," new entries\n")
-      cat("Arrivals from ",arrivals_all_df %>% pull(sched) %>% as_datetime(.) %>%
+      departures_old_df <- readRDS(fname_rds)
+      cat("Departures: Updating ",nrow(departures_old_df)," existing flights\n")
+      departures_all_df <- update_fra_df(departures_old_df)
+      cat("Departures: now ",nrow(departures_all_df)-nrow(departures_old_df)," new entries\n")
+      cat("Departures from ",departures_all_df %>% pull(sched) %>% as_datetime(.) %>%
             min(.) %>% format_ISO8601(.usetz=T),
-          " to ",arrivals_all_df %>% pull(sched) %>% as_datetime(.) %>%
+          " to ",departures_all_df %>% pull(sched) %>% as_datetime(.) %>%
             max(.) %>% format_ISO8601(.usetz=T),"\n")
-      saveRDS(arrivals_all_df,fname_rds)
-      write_csv2(arrivals_all_df,fname_csv)
+      saveRDS(departures_all_df,fname_rds)
+      write_csv2(departures_all_df,fname_csv)
     }
     return(TRUE)
   }

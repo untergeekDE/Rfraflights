@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_fra_arrivals_departures.R
 \name{update_fra_df}
 \alias{update_fra_df}
-\title{Tupdate_fra_df}
+\title{update_fra_df}
 \usage{
 update_fra_df(df, h_back = 48, h_forward = 120)
 }
