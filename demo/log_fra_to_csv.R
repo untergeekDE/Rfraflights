@@ -44,8 +44,8 @@ if (dir.exists("/home/jan_eggers_hr_de/")) {
 
   system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../fra_log/fra_arrivals.csv gs://d.data.gcp.cloud.hr.de/arrivals.csv')
   system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../fra_log/fra_departures.csv gs://d.data.gcp.cloud.hr.de/departures.csv')
-  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_arrivals.RDS gs://d.data.gcp.cloud.hr.de/fra_arrivals.RDS')
-  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ./fra_log/fra_departures.RDS gs://d.data.gcp.cloud.hr.de/fra_departures.RDS')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../fra_log/fra_arrivals.RDS gs://d.data.gcp.cloud.hr.de/fra_arrivals.RDS')
+  system('gsutil -h "Cache-Control:no-cache, max_age=0" cp ../fra_log/fra_departures.RDS gs://d.data.gcp.cloud.hr.de/fra_departures.RDS')
 
 }
 
