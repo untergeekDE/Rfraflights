@@ -1,7 +1,7 @@
 Package: Rfraflights
 Type: Package
 Title: Read FRA Flight Data
-Version: 0.2.0
+Version: 0.2.1
 Author: Jan Eggers <jan.eggers@hr.de>
 Maintainer: Jan Eggers <jan.eggers@hr.de>
 Description: R Wrapper for the unofficial API powering the frankfurt-airport.com website: Read a number of arrivals/departures, or up to a point in time, starting at a date, acquiring actual status. Flights are sorted by sched datetime and can be queried from 48hrs in the past onwards.
@@ -9,4 +9,4 @@ License: GPL
 Depends: R (>= 4.0.0), jsonlite, utils, lubridate, dplyr, stringr, readr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
